@@ -46,7 +46,7 @@ namespace MyQRCode.Controllers
             QRCodeGenerator qrGenerator = new QRCodeGenerator();
             QRCodeData qrCodeData = qrGenerator.CreateQrCode(personalInfo, QRCodeGenerator.ECCLevel.Q);
             QRCode qrCode = new QRCode(qrCodeData);
-            Bitmap qrCodeImage = qrCode.GetGraphic(10);
+            Bitmap qrCodeImage = qrCode.GetGraphic(2);
 
             // Chuyển đổi Bitmap thành mảng byte
             byte[] byteImage;
@@ -87,13 +87,12 @@ namespace MyQRCode.Controllers
                     {
                         if (reader.Read())
                         {
-                            personalInfo = "Full Name: " + reader["FullName"].ToString() + "\n";
+                            personalInfo += "Full Name: " + reader["Name"].ToString() + "\n";
                             personalInfo += "Email: " + reader["Email"].ToString() + "\n";
-                            personalInfo += "Phone: " + reader["Phone"].ToString() + "\n";
+                            personalInfo += "Phone: " + reader["PhoneNumber"].ToString() + "\n";
                             personalInfo += "Website: " + reader["Website"].ToString() + "\n";
                         }
                     }
-                    // Không cần đóng kết nối ở đây vì sẽ đóng ở phương thức About()
                 }
             }
             catch (Exception ex)
@@ -103,6 +102,5 @@ namespace MyQRCode.Controllers
 
             return personalInfo;
         }
-
     }
 }
